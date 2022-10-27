@@ -1,0 +1,27 @@
+# This is a basic workflow that is manually triggered
+
+name: Rapid7 InsightAppSec Scan
+
+
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  push:
+    branches: [ master ]
+    
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - id: my-scan
+        uses: rapid7/insightappsec-scan-github-actions@v1.1.0
+        with:
+          region: "us"
+          api-key: ${{ secrets.IAS_API_KEY }}
+          scan-config-id: "999703e4-a4p0-4ea6-a3sc-53cg789e4fc1"
+          vuln-query: "vulnerability.severity = 'MEDIUM'"
+      - name: Upload findings
+        if: always()
+        run: echo "${{ steps.my-scan.outputs.scan-findings }}"
