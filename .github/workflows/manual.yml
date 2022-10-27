@@ -19,7 +19,7 @@ jobs:
         uses: rapid7/insightappsec-scan-github-actions@v1.1.0
         with:
           region: "us"
-          api-key: ${{ secrets.IAS_API_KEY }}
+          api-key: 30cd2efa-362e-4b3b-bda9-0cc6fe16d4dd
           scan-config-id: "999703e4-a4p0-4ea6-a3sc-53cg789e4fc1"
           vuln-query: "vulnerability.severity = 'MEDIUM'"
       - name: Upload findings
