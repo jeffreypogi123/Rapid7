@@ -6,9 +6,9 @@ uses: rapid7/insightappsec-scan-github-actions@v1.3.0
       - id: my-scan
         uses: rapid7/insightappsec-scan-github-actions@v1.1.0
         with:
-          region: "us"
+          region: "eu"
           api-key: ${{ secrets.IAS_API_KEY }}
-          scan-config-id: "999703e4-a4p0-4ea6-a3sc-53cg789e4fc1"
+          scan-config-id: "9f87982a-7e61-4eeb-8665-708af8b66d0c"
           vuln-query: "vulnerability.severity = 'MEDIUM'"
       - name: Upload findings
         if: always()
