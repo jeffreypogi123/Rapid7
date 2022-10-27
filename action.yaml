@@ -1,39 +1,15 @@
-name: "Rapid7 InsightAppSec Scan"
-description: >
-  The Rapid7 InsightAppSec Scan action allows application and security teams to embed DAST into build and release pipelines.
-inputs:
-  region:
-    description: "The region indicates the geo-location of the Insight Platform"
-    required: true
-    default: "us"
-  api-key:
-    description: >
-      The API key used to authorized the GitHub action to interact with the Rapid7 API. The API key should be stored as
-      a GitHub secret
-    required: true
-  scan-config-id:
-    description: >
-      The UUID of the scan configuration to be used during scanning. The scan configuration should be a sub-resource of
-      the application and can be obtained from InsightAppSec
-    required: true
-  vuln-query:
-    description: >
-      Scan gating query
-    required: false
-    default: ""
-  wait-for-scan-complete:
-    description: >
-      Wait for scan to complete before finishing action. False will return the InsightAppSec Scan ID.
-    required: false
-    default: true
-  scan-timeout-mins:
-    description: >
-      The maximum amount of time (in minutes) the scan is allowed to run before canceling and failing the job.
-    required: false
-
-outputs:
-  scan-findings:
-      description: "A raw JSON report containing all findings from a completed scan."
-runs:
-  using: node12
-  main: dist/index.js
+name: Rapid7 InsightAppSec Scan
+uses: rapid7/insightappsec-scan-github-actions@v1.3.0
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - id: my-scan
+        uses: rapid7/insightappsec-scan-github-actions@v1.1.0
+        with:
+          region: "us"
+          api-key: ${{ secrets.IAS_API_KEY }}
+          scan-config-id: "999703e4-a4p0-4ea6-a3sc-53cg789e4fc1"
+          vuln-query: "vulnerability.severity = 'MEDIUM'"
+      - name: Upload findings
+        if: always()
+        run: echo "${{ steps.my-scan.outputs.scan-findings }}"
