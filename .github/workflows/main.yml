@@ -1,0 +1,18 @@
+name: IAS Scan
+on:
+  push:
+    branches: main
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - id: my-scan
+        uses: rapid7/insightappsec-scan-github-actions@v1.3.0
+        with:
+          region: "eu"
+          api-key: d3a93707-dab1-4932-ae80-5d9831cce008
+          scan-config-id: "9f87982a-7e61-4eeb-8665-708af8b66d0c"
+          vuln-query: "vulnerability.vulnerabilityScore > 4"
+      - name: Upload findings
+        if: always()
+        run: echo "${{ steps.my-scan.outputs.scan-findings }}"
