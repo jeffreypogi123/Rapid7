@@ -12,7 +12,6 @@ jobs:
           region: "eu"
           api-key: d3a93707-dab1-4932-ae80-5d9831cce008
           scan-config-id: "8aae26cb-670c-4553-b87f-c7a3d4008e1a"
-          vuln-query: "vulnerability.vulnerabilityScore > 0"
       - name: Upload findings
         if: always()
         run: echo "${{ steps.my-scan.outputs.scan-findings }}"
